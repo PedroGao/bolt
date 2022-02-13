@@ -32,7 +32,7 @@ type page struct {
 	flags    uint16
 	count    uint16
 	overflow uint32
-	ptr      uintptr
+	ptr      uintptr // 元数据指针
 }
 
 // typ returns a human readable page type string used for debugging.
