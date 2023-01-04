@@ -9,29 +9,29 @@ import (
 
 const pageHeaderSize = int(unsafe.Offsetof(((*page)(nil)).ptr))
 
-const minKeysPerPage = 2
+const minKeysPerPage = 2 // 页的最小key个数
 
 const branchPageElementSize = int(unsafe.Sizeof(branchPageElement{}))
 const leafPageElementSize = int(unsafe.Sizeof(leafPageElement{}))
 
 const (
-	branchPageFlag   = 0x01
-	leafPageFlag     = 0x02
-	metaPageFlag     = 0x04
-	freelistPageFlag = 0x10
+	branchPageFlag   = 0x01 // 内部结点页
+	leafPageFlag     = 0x02 // 叶子结点页
+	metaPageFlag     = 0x04 // 元数据页，实现事务的关键
+	freelistPageFlag = 0x10 // 空闲列表页
 )
 
 const (
-	bucketLeafFlag = 0x01
+	bucketLeafFlag = 0x01  // bucket叶子结点
 )
 
 type pgid uint64
 
 type page struct {
-	id       pgid
-	flags    uint16
-	count    uint16
-	overflow uint32
+	id       pgid    // 页id
+	flags    uint16  // 页类型
+	count    uint16  // kv个数
+	overflow uint32  // 节点溢出页个数
 	ptr      uintptr // 元数据指针
 }
 

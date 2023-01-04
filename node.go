@@ -560,31 +560,29 @@ func (n *node) free() {
 }
 
 // dump writes the contents of the node to STDERR for debugging purposes.
-/*
-func (n *node) dump() {
-	// Write node header.
-	var typ = "branch"
-	if n.isLeaf {
-		typ = "leaf"
-	}
-	warnf("[NODE %d {type=%s count=%d}]", n.pgid, typ, len(n.inodes))
+// func (n *node) dump() {
+// 	// Write node header.
+// 	var typ = "branch"
+// 	if n.isLeaf {
+// 		typ = "leaf"
+// 	}
+// 	warnf("[NODE %d {type=%s count=%d}]", n.pgid, typ, len(n.inodes))
 
-	// Write out abbreviated version of each item.
-	for _, item := range n.inodes {
-		if n.isLeaf {
-			if item.flags&bucketLeafFlag != 0 {
-				bucket := (*bucket)(unsafe.Pointer(&item.value[0]))
-				warnf("+L %08x -> (bucket root=%d)", trunc(item.key, 4), bucket.root)
-			} else {
-				warnf("+L %08x -> %08x", trunc(item.key, 4), trunc(item.value, 4))
-			}
-		} else {
-			warnf("+B %08x -> pgid=%d", trunc(item.key, 4), item.pgid)
-		}
-	}
-	warn("")
-}
-*/
+// 	// Write out abbreviated version of each item.
+// 	for _, item := range n.inodes {
+// 		if n.isLeaf {
+// 			if item.flags&bucketLeafFlag != 0 {
+// 				bucket := (*bucket)(unsafe.Pointer(&item.value[0]))
+// 				warnf("+L %08x -> (bucket root=%d)", trunc(item.key, 4), bucket.root)
+// 			} else {
+// 				warnf("+L %08x -> %08x", trunc(item.key, 4), trunc(item.value, 4))
+// 			}
+// 		} else {
+// 			warnf("+B %08x -> pgid=%d", trunc(item.key, 4), item.pgid)
+// 		}
+// 	}
+// 	warn("")
+// }
 
 type nodes []*node
 
@@ -599,9 +597,9 @@ func (s nodes) Less(i, j int) bool {
 // to an element which hasn't been added to a page yet.
 type inode struct {
 	flags uint32
-	pgid  pgid
+	pgid  pgid   // 子节点id
 	key   []byte
-	value []byte
+	value []byte // 叶子结点value
 }
 
 type inodes []inode

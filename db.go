@@ -967,7 +967,7 @@ type Info struct {
 	PageSize int
 }
 
-type meta struct {
+type meta struct {   // 元数据，元数据页加载到内存后
 	magic    uint32
 	version  uint32
 	pageSize uint32
